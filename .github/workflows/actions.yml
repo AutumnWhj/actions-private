@@ -1,6 +1,8 @@
 name: monitor actions from private
 on:
   push:
+    branches:
+      - master
     tags:
       - release/*
 jobs:
