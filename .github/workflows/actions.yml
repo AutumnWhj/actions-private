@@ -14,11 +14,32 @@ jobs:
         with:
           repository: 2bitlab/vue-test-private
           token: ${{ secrets.ACCESS_TOKEN }}
+          
+      - name: Sync Branches and notify WeChat message start
+        uses: AutumnWhj/sync-branches-action@master
+        with:
+          githubToken: ${{ secrets.ACCESS_TOKEN }}
+          wechatKey: ${{ secrets.WORK_WECHAT_GITHUB_ROBOT_KEY }}
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
 
       - name: Build
-        run: yarn build
+        run: yarn build --filePath="${{ env.BRANCH }}/default"
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYMMDDHHmm
+          utcOffset: '+08:00'
+
+      - name: Use current time
+        env:
+          F_TIME: '${{ steps.current-time.outputs.formattedTime }}'
+        run: echo "NOW=$F_TIME" >> $GITHUB_ENV
+
