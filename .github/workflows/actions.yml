@@ -1,8 +1,6 @@
 name: monitor actions from private
 on:
   push:
-    branches:
-      - master
     tags:
       - release/*
 jobs:
@@ -12,9 +10,8 @@ jobs:
       - name: Checkout private tools
         uses: actions/checkout@master
         with:
-          repository: 2bitlab/subapp_admin
+          repository: 2bitlab/vue-test-private
           token: ${{ secrets.ACCESS_TOKEN }}
-          # path: /
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
