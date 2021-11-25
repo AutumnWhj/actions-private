@@ -1,0 +1,23 @@
+name: monitor actions from private
+on:
+  push:
+    tags:
+      - release/*
+jobs:
+  action_tigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private tools
+        uses: actions/checkout@master
+        with:
+          repository: 2bitlab/subapp_admin
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: subapp_admin
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build
+        run: yarn build
