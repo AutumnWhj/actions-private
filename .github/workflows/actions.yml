@@ -9,16 +9,16 @@ jobs:
   action_tigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout private tools
-        uses: actions/checkout@master
-        with:
-          repository: 2bitlab/vue-test-private
-          token: ${{ secrets.ACCESS_TOKEN }}
-
       - name: Tag parse
         uses: AutumnWhj/tag-parse-action@master
         with:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Checkout private tools
+        uses: actions/checkout@master
+        with:
+          repository: 2bitlab/${{ env.REPOSITORY }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           
       - uses: actions/setup-node@v2
         with:
